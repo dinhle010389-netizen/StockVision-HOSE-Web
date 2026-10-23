@@ -90,3 +90,8 @@ Bộ test hiện mô phỏng nguồn bằng fixture và kiểm tra parser, chu�
 - `backend/sql/`: schema/migrations.
 - `render.yaml`, `Dockerfile`: triển khai web.
 - `StockVisionHOSE.spec`, `BUILD_WINDOWS_EXE.bat`: giữ lại khả năng dựng nhánh desktop Windows.
+
+
+## GitHub repository mục tiêu cho bro
+
+Repository mục tiêu là [`dinhle010389-netizen/StockVision-HOSE-Web`](https://github.com/dinhle010389-netizen) với URL `https://github.com/dinhle010389-netizen/StockVision-HOSE-Web.git`. Đây là URL dự kiến; repository trên GitHub chưa được tạo hoặc push từ môi trường này. Xem `ACCOUNT_CREATION_AND_DEPLOY_VI.md` để tạo repository private, push nhánh `main`, kết nối Render và triển khai production an toàn.

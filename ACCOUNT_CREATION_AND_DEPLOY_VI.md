@@ -1,41 +1,61 @@
-# Tạo tài khoản GitHub/Render và triển khai StockVision HOSE
+# GitHub + Render: thiết lập riêng cho dinhle010389-netizen
 
-## Lưu ý quyền và thanh toán
+## Thông tin repository mục tiêu
 
-Tài khoản GitHub/Render phải được tạo và xác minh bởi chủ tài khoản. Bạn cần tự nhập email, mật khẩu, xác thực đa yếu tố nếu bật, chấp nhận điều khoản và phương thức thanh toán. Không gửi mật khẩu, mã MFA, token GitHub, token Render hoặc FireAnt qua chat.
+- GitHub profile: https://github.com/dinhle010389-netizen
+- Repository đề xuất: `dinhle010389-netizen/StockVision-HOSE-Web`
+- URL remote `origin` đã được đặt trong bản mã nguồn local: `https://github.com/dinhle010389-netizen/StockVision-HOSE-Web.git`
+- Trạng thái: **repository trên GitHub chưa được tạo và chưa push**. Tên/URL ở trên là mục tiêu dự kiến, không phải bằng chứng repository tồn tại.
 
-`render.yaml` là **production Blueprint có tài nguyên tính phí**: web service Starter và Render Postgres Basic-256mb. Theo thông tin giá Render được kiểm tra ngày 23/10/2026, cấu hình tối thiểu tương tự được ước tính khoảng US$13/tháng trước băng thông/phần lưu trữ phát sinh; kiểm tra giá hiện hành ở https://render.com/pricing trước khi triển khai. Không nhấn Deploy Blueprint cho đến khi đồng ý với khoản phí.
+## 1. Tạo repository riêng
 
-`render.preview.yaml` là bản miễn phí để xem thử; web có thể ngủ khi idle, và PostgreSQL Free hết hạn sau 30 ngày. Không dùng nó làm hệ thống thu thập dữ liệu lâu dài.
+1. Mở https://github.com/dinhle010389-netizen và đăng nhập bằng tài khoản của bạn.
+2. Mở https://github.com/new.
+3. Owner: `dinhle010389-netizen`; Repository name: `StockVision-HOSE-Web`.
+4. Chọn **Private**.
+5. Không chọn khởi tạo README, `.gitignore` hoặc license (mã nguồn đã có lịch sử Git).
+6. Chọn **Create repository**.
 
-## A. Tạo repository riêng trên GitHub
+Không cung cấp mật khẩu GitHub, mã MFA hoặc token trong cuộc trò chuyện. Nếu muốn ChatGPT thực hiện thao tác qua tích hợp GitHub, phải tự kết nối/ủy quyền tích hợp trong giao diện ứng dụng; chỉ username không cấp quyền ghi repository.
 
-1. Tạo tài khoản tại https://github.com/signup và xác minh email.
-2. Cài GitHub Desktop từ https://desktop.github.com/ rồi đăng nhập tài khoản.
-3. Giải nén bộ ZIP repository-ready. Trong GitHub Desktop chọn **File → Add Local Repository**, chọn thư mục dự án (thư mục cần có `.git`).
-4. Chọn **Publish repository**, đặt tên `StockVision-HOSE-Web`, chọn **Keep this code private**, rồi Publish.
-5. Mở repository trên GitHub và kiểm tra tab Actions: workflow StockVision CI phải chạy. Nếu không, vào Settings → Actions bật GitHub Actions phù hợp với repository.
+## 2. Đẩy mã nguồn lên GitHub
 
-## B. Tạo dịch vụ Render production
+Gói ZIP repository-ready giữ thư mục `.git` và `origin` đã trỏ đến URL mục tiêu. Sau khi tạo repository rỗng ở bước 1, mở PowerShell trong thư mục đã giải nén và chạy:
 
-1. Tạo tài khoản tại https://dashboard.render.com/register và xác minh email.
-2. Render Dashboard → **New → Blueprint** → kết nối GitHub, cấp quyền chỉ cho repository `StockVision-HOSE-Web` khi được hỏi.
-3. Chọn repository/branch `main`, Blueprint path `render.yaml`.
-4. Đọc lại tài nguyên: web service Starter + PostgreSQL Basic-256mb. Các tài nguyên này được tính phí. Nếu chưa muốn trả phí, hủy bước này và chọn `render.preview.yaml` trong một Blueprint riêng chỉ để demo.
-5. Khi Render hỏi `APP_ACCESS_PASSWORD`, tự tạo mật khẩu riêng dài tối thiểu 16 ký tự và nhập trực tiếp vào Dashboard. `APP_SESSION_SECRET` được Render sinh tự động; không thay bằng mật khẩu người dùng.
-6. Kiểm tra các thay đổi và chi phí rồi mới chọn **Deploy Blueprint**. Không cần đặt FIREANT token; chương trình mặc định sử dụng public-data provider ở EOD.
-7. Chờ build/deploy xong, mở URL `https://<service>.onrender.com/api/v1/health` và xác nhận `status=ok`, `database=ok`.
-8. Mở URL gốc, đăng nhập bằng APP_ACCESS_PASSWORD, mở `/api/v1/providers/status`, `/api/v1/providers/public/sync-status`. Chỉ kết luận đã đồng bộ thật khi status `success`/`partial`, có `bars_saved > 0`, `upstream_sources` được quan sát và thời điểm hoàn tất mới. `package ready` hay cache hit không chứng minh kết nối mạng.
-9. Kiểm tra `/api/v1/market/overview`, sau đó thử trên Safari iPhone: Share → Add to Home Screen.
+```powershell
+git remote -v
+git push -u origin main
+```
 
-## C. Vận hành lâu dài
+Lệnh này yêu cầu Git cài sẵn và xác thực GitHub hợp lệ trên máy của bạn. Nếu GitHub Desktop đã được cài, có thể đăng nhập trong GitHub Desktop và dùng **Repository → Push**.
 
-- Theo dõi Render Events/Logs và GitHub Actions.
-- Mỗi lần push lên `main`, Render tự triển khai **sau khi CI pass** (`autoDeployTrigger: checksPass`).
-- Sao lưu PostgreSQL định kỳ và thử quy trình restore. Render có backup/PITR cho cơ sở dữ liệu trả phí; cần xem cửa sổ khôi phục theo workspace plan hiện hành.
-- Theo dõi ngày/thời gian sync, số nến nhận/lưu/từ chối, upstream và lỗi. Nguồn công khai hiện chủ yếu là lịch sử/EOD, không cam kết realtime.
-- Kiểm tra điều khoản từng nhà cung cấp trước khi lưu/tái phân phối dữ liệu. Không commit `.env` hoặc token.
+Sau khi push, kiểm tra tab **Actions** xem workflow CI hoàn tất trước khi deploy.
 
-## Trạng thái hiện tại
+## 3. Kết nối Render
 
-Bộ mã đã chuẩn bị và kiểm thử offline; tài liệu này không khẳng định tài khoản GitHub/Render, dịch vụ, URL HTTPS hoặc kết nối nguồn trực tuyến đã được tạo. Chủ tài khoản phải thực hiện các bước xác minh/ủy quyền/tính phí. Sau khi tích hợp GitHub/Render được kết nối và cấp quyền trong môi trường hỗ trợ, việc đẩy repository/deploy có thể tiếp tục bằng các công cụ tương ứng.
+1. Đăng nhập https://dashboard.render.com/.
+2. Render Dashboard → Account Settings → Account Security / Git Deployment Credentials → kết nối GitHub.
+3. Cấp quyền chỉ cho repository `StockVision-HOSE-Web` nếu Render cho phép chọn repository cụ thể.
+4. Chọn **New → Blueprint**, repository `dinhle010389-netizen/StockVision-HOSE-Web`, branch `main`, Blueprint path `render.yaml`.
+5. Đọc danh sách tài nguyên và giá trước khi tạo. Production Blueprint tạo web service có phí và PostgreSQL có lưu trữ bền vững.
+6. Đặt `APP_ACCESS_PASSWORD` trực tiếp trong Render, dùng mật khẩu riêng mạnh (ít nhất 16 ký tự); không commit mật khẩu.
+7. `APP_SESSION_SECRET` được Render tạo tự động. Không cần nhập token FireAnt; provider mặc định là dữ liệu công khai lịch sử/EOD.
+8. Chỉ nhấn Deploy sau khi đã đồng ý chi phí và kiểm tra cấu hình.
+
+Tài liệu chính thức: https://render.com/docs/git-provider, https://render.com/docs/infrastructure-as-code và https://render.com/pricing.
+
+## 4. Kiểm tra sau triển khai
+
+- `https://<dịch-vụ>.onrender.com/api/v1/health` phải trả `status=ok` và `database=ok`.
+- Đăng nhập ở URL gốc bằng mật khẩu ứng dụng đã cài.
+- Kiểm tra `/api/v1/providers/status` và `/api/v1/providers/public/sync-status`.
+- Chỉ xem sync là dữ liệu live khi báo cáo có lời gọi upstream được quan sát, thời điểm sync mới và `bars_saved > 0`; cache hit đơn thuần không chứng minh kết nối mạng.
+- Xác minh một vài nến FPT/VCB/HPG với nguồn tham chiếu và xem log lỗi.
+- Lập lịch backup PostgreSQL và thử restore trước khi dùng lâu dài.
+
+## 5. Trạng thái trung thực hiện tại
+
+- Mã nguồn, CI, production Blueprint và hướng dẫn đã được chuẩn bị local.
+- GitHub remote mục tiêu được khai báo; repository thật chưa được tạo vì cần thao tác trong tài khoản/ủy quyền GitHub.
+- Render chưa được liên kết, chưa tạo tài nguyên, chưa có HTTPS URL và chưa có mật khẩu thật.
+- Upstream public-data sync và PostgreSQL production chưa được kiểm thử live trong môi trường xây dựng này.

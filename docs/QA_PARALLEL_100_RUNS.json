@@ -5,7 +5,7 @@
   "successful_jobs": 100,
   "failed_jobs": 0,
   "assertions_total": 3500,
-  "elapsed_seconds": 2.615,
+  "elapsed_seconds": 2.995,
   "network_requests_made": 0,
   "postgresql_production_tested": false,
   "live_public_sync_confirmed": false,

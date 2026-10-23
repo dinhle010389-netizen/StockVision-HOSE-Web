@@ -5,14 +5,18 @@ from datetime import datetime, timezone
 from pathlib import Path
 import json
 import random
+import sys
 import time
 import yaml
+
+ROOT = Path(__file__).resolve().parents[1]
+# Make the script runnable directly from the repository root without requiring
+# callers to remember PYTHONPATH=backend.
+sys.path.insert(0, str(ROOT / "backend"))
 
 from app.normalizers import NormalizationError, normalize_symbol, normalize_tcbs_bar
 from app.risk import analyze_hermitian_matrix, covariance_from_returns, RiskMatrixError
 from app.main import _split_sql_statements
-
-ROOT = Path(__file__).resolve().parents[1]
 N_WORKERS = 100
 checks_per_job = 0
 
