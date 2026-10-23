@@ -9,3 +9,5 @@ Repository: local Git history maintained in the publish-ready directory/bundle; 
 Render: Blueprint prepared/locally validated; cloud services and HTTPS URL have NOT been provisioned.
 Live data: no real upstream sync is claimed until provider sync status reports success/partial with source calls observed and bars saved.
 Validation: see docs/TEST_REPORT.txt and docs/PRODUCTION_COSTS_AND_RELIABILITY_VI.md.
+
+Offline verification: 129/129 pytest tests; 100/100 parallel workers with 3,500 assertions; production and preview YAML parse; secret-hygiene scan pass. No live upstream/remote deployment claim.

@@ -14,7 +14,7 @@ AUTOMATED TESTS
 
 PARALLEL CROSS-CHECK
 - Script: scripts/qa_parallel_crosscheck_100.py
-- 100 concurrent worker jobs passed; see docs/QA_PARALLEL_100_RUNS.txt.
+- 100 concurrent worker jobs passed, 3,500 assertions, 0 failed; see docs/QA_PARALLEL_100_RUNS.txt.
 - The test is offline by design and makes zero external requests.
 
 NOT EXECUTED LIVE

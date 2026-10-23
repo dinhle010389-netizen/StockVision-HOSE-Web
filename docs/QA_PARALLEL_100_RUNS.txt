@@ -1,9 +1,9 @@
-StockVision HOSE Web 0.5 — Parallel cross-check report
+StockVision HOSE Web — Production pack parallel cross-check report
 Concurrent worker jobs: 100/100
 Successful jobs: 100
 Failed jobs: 0
-Assertions: 3200
-Elapsed seconds: 2.466
+Assertions: 3500
+Elapsed seconds: 2.615
 External network requests: 0 (offline test by design)
 Production PostgreSQL: not tested (no server credentials/network access)
 Live upstream synchronization: NOT CONFIRMED
