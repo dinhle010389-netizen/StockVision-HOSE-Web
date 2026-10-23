@@ -28,6 +28,9 @@ def run_one(worker_id: int) -> dict:
     assert env["DATABASE_URL"]["fromDatabase"]["name"] == "stockvision-db"; checks += 1
     assert env["FIREANT_API_TOKEN"].get("value", "") == ""; checks += 1
     assert env["DEMO_MODE"]["value"] == "false"; checks += 1
+    assert service["plan"] == "starter"; checks += 1
+    assert render["databases"][0]["plan"] == "basic-256mb"; checks += 1
+    assert service["autoDeployTrigger"] == "checksPass"; checks += 1
 
     # Symbol canonicalization and input-safety
     raw_symbol = f"fpt{worker_id:03d}"
@@ -119,7 +122,7 @@ def main():
     }
     (ROOT / "docs/QA_PARALLEL_100_RUNS.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
     lines = [
-        "StockVision HOSE Web 0.5 — Parallel cross-check report",
+        "StockVision HOSE Web — Production pack parallel cross-check report",
         f"Concurrent worker jobs: {report['workers_completed']}/{N_WORKERS}",
         f"Successful jobs: {report['successful_jobs']}",
         f"Failed jobs: {report['failed_jobs']}",

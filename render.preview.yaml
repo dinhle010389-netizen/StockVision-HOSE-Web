@@ -1,7 +1,7 @@
 # Optional preview-only Blueprint. Free resources may sleep; free Postgres expires after 30 days.
 # Do not use this Blueprint for persistent or unattended operation.
 previews:
-  generation: off
+  generation: "off"
 services:
   - type: web
     name: stockvision-hose-preview

@@ -4,7 +4,7 @@
 # for a Starter web service + Basic-256mb Postgres, before usage/storage extras.
 # Review https://render.com/pricing before clicking Deploy Blueprint.
 previews:
-  generation: off
+  generation: "off"
 
 services:
   - type: web

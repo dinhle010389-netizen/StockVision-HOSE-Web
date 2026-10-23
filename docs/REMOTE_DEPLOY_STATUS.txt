@@ -1,20 +1,19 @@
-StockVision HOSE Web 0.5 — remote/live status
+StockVision HOSE Web — remote/live status (production package)
 
-LOCAL REPOSITORY PREPARATION: complete; Git repository initialized and initial commit created in the downloadable Git bundle.
-GITHUB PRIVATE REMOTE: NOT CREATED. No authorized GitHub account/repository integration was available in this execution environment.
-RENDER BLUEPRINT: YAML validated locally; not deployed to a Render workspace.
-HTTPS URL: not created.
-APP_ACCESS_PASSWORD: Blueprint is configured with sync:false. The real password must be entered privately in Render's creation flow/Dashboard, not committed.
+LOCAL REPOSITORY PREPARATION: complete; local Git repository has production Blueprint and account/deploy guides.
+GITHUB PRIVATE REMOTE: NOT CREATED. User-owned account/authorization is required.
+RENDER PRODUCTION BLUEPRINT: validated locally; NOT DEPLOYED.
+PRODUCTION RESOURCE PLAN: Starter web + Basic-256mb PostgreSQL (billable when deployed).
+HTTPS URL: NOT CREATED.
+APP_ACCESS_PASSWORD: secret variable uses sync:false; owner must enter privately in Render Dashboard.
 APP_SESSION_SECRET: Render generateValue=true.
-LIVE PUBLIC DATA SYNC: NOT CONFIRMED.
-ENVIRONMENT NETWORK CHECK: urllib requests to GitHub API and Render docs failed with temporary DNS resolution failure. `vn-market-data` is not installed in this local runtime. Therefore no real upstream request was completed here.
-PRODUCTION POSTGRESQL: not connected. Automated database integration checks use isolated SQLite.
+LIVE PUBLIC DATA SYNC: NOT CONFIRMED; no successful provider request from this build environment.
+PRODUCTION POSTGRESQL: not connected; functional DB tests use isolated SQLite.
 
 LOCAL CHECKS:
-- pytest: 128 passed, 0 failed.
-- Concurrent cross-check: 100/100 worker jobs passed, 3,200 assertions, 0 failed jobs.
-- YAML/OpenAPI parse: pass.
-- Python compile: pass.
-- Secret-hygiene scan: pass.
+- pytest: see docs/TEST_REPORT.txt.
+- Parallel cross-check: 100 workers; see docs/QA_PARALLEL_100_RUNS.txt.
+- YAML/OpenAPI parse, Python compile and secret-hygiene check: pass.
 
-Free Render preview warning: current Render documentation says free web services sleep after 15 minutes idle and use an ephemeral filesystem, and free PostgreSQL expires after 30 days. This Blueprint is therefore for evaluation only, not guaranteed continuous sync or durable data storage. See https://render.com/docs/free.
+PREVIEW OPTION:
+render.preview.yaml is Free/demo only. Render Free web services can sleep after inactivity, and Free PostgreSQL expires after 30 days. Not recommended for durable market history. See https://render.com/docs/free.

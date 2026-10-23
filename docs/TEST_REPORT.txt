@@ -1,37 +1,30 @@
-StockVision HOSE Web 0.5 — Public Data Edition QA
+StockVision HOSE Web — Production Deployment Pack QA
 QA rerun: 2026-10-23
-Source baseline: StockVision_HOSE_Windows_EXE_0.4; the original baseline directory was not overwritten.
+Application baseline: StockVision HOSE Web 0.5, derived from the preserved Windows EXE 0.4 codebase.
 
 AUTOMATED TESTS
 - Command: PYTHONPATH=backend pytest -q --disable-warnings
-- Latest complete run in this repo-ready branch: 128 passed, 0 failed.
+- Latest complete run in production pack: 129 passed, 0 failed.
 - Python compileall: passed for backend, scripts and desktop_launcher.py.
-- Node.js --check: passed for the inline dashboard JavaScript (when Node.js is available).
-- render.yaml YAML parse: passed.
-- docs/openapi.json JSON parse: passed.
-- Secret-hygiene source scan: passed; no obvious private-key/AWS-key patterns or .env file included.
-- A new regression test checks provider status reports observed sync telemetry without exposing credentials or calling a cache-only success a live network check.
+- Render production and preview Blueprints parse as YAML.
+- Production Blueprint uses Starter web + Basic-256mb PostgreSQL, no free production resource, CI-gated auto deploy, generated session secret, and prompted app password.
+- Preview Blueprint explicitly uses Free plans, DEMO_MODE=true and public auto-sync=false.
+- docs/openapi.json parses as JSON.
+- Secret-hygiene source scan: passed; no live .env/token/password in package.
 
 PARALLEL CROSS-CHECK
 - Script: scripts/qa_parallel_crosscheck_100.py
-- 100 concurrent worker jobs: 100 passed, 0 failed.
-- Assertions: 3,200.
-- Elapsed in current environment: see docs/QA_PARALLEL_100_RUNS.txt.
+- 100 concurrent worker jobs passed; see docs/QA_PARALLEL_100_RUNS.txt.
 - The test is offline by design and makes zero external requests.
 
-BUGS FOUND / IMPROVEMENTS
-- Provider status endpoint now separates installed/ready from sync telemetry and reports last sync status, completion time, bars saved/rejected and observed upstream source names.
-- `network_tested=true` only when a successful/partial sync recorded actual upstream source calls. A cache-only sync does not count as proof of a live upstream request.
-- Added explicit PyYAML dependency so the CI YAML checks can run on a clean runner.
-- Render Blueprint and deployment docs explicitly warn that free web services sleep when idle and Free PostgreSQL expires after 30 days; free plan is for preview only.
-
 NOT EXECUTED LIVE
-- GitHub private remote has not been created because no connected/authorized GitHub workspace is available to this execution.
-- Render Blueprint has not been deployed; no HTTPS URL or Render secrets have been created.
-- Actual public provider sync is NOT confirmed. Container outbound DNS resolution failed and vn-market-data was not installed in the local test runtime; provider/sync tests use fake payloads.
-- Production PostgreSQL has not been connected or tested; database sync integration tests use isolated SQLite.
+- No GitHub remote created because user-owned account/authorization was not available.
+- No Render Blueprint deployed; no HTTPS URL/resources/secrets created.
+- Actual public provider sync is NOT confirmed. Tests use fake payloads and isolated SQLite.
+- Managed production PostgreSQL has not been connected or tested.
 - FireAnt/TCBS credentials are not included and were not tested.
 
 SCOPE LIMITS
-- Public data adapter focuses on historical/EOD OHLCV; it does not claim realtime ticks/order book.
-- Public endpoint availability does not grant redistribution rights. Follow each source's terms.
+- Public data adapter primarily supports historical/EOD OHLCV; not a realtime tick/order-book promise.
+- Public source accessibility does not imply unlimited redistribution rights.
+- Render production resources are billable; see docs/PRODUCTION_COSTS_AND_RELIABILITY_VI.md before deploy.

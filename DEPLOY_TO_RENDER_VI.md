@@ -1,50 +1,44 @@
-# Đưa StockVision HOSE lên HTTPS và cài trên iPhone
+# Triển khai StockVision HOSE Web lên Render và cài PWA trên iPhone
 
-## Trạng thái chính xác
+## Chọn đúng Blueprint
 
-- Gói này **đã chuẩn bị cấu hình triển khai Render** (`render.yaml`) và gộp frontend PWA với FastAPI cùng một origin.
-- HTTPS, hostname và PostgreSQL chỉ được tạo khi người vận hành đăng nhập Render và triển khai Blueprint. Chúng chưa được tạo từ môi trường này.
-- Lần đầu `DEMO_MODE=true`; biểu đồ/mã giá vẫn là mô phỏng rõ nhãn. Không có FireAnt token hay quyền DataFeed nào được nhúng trong mã.
-- Blueprint chọn Render Postgres Free phục vụ thử nghiệm. Theo tài liệu Render hiện hành, cơ sở dữ liệu Free hết hạn sau 30 ngày; nâng cấp database sang gói trả phí nếu cần giữ dữ liệu lâu hơn. Web service Free có thể ngủ khi không dùng.
+- `render.yaml`: production, web Starter + PostgreSQL Basic-256mb, dữ liệu DB bền vững, tự deploy chỉ khi CI pass. **Tạo tài nguyên có phí**. Đọc `PRODUCTION_COSTS_AND_RELIABILITY_VI.md` trước khi xác nhận.
+- `render.preview.yaml`: bản preview miễn phí, `DEMO_MODE=true`, không đồng bộ nguồn. Free web có thể ngủ; Free PostgreSQL hết hạn sau 30 ngày. Chỉ dùng để xem giao diện, không giữ lịch sử.
 
-## Điều kiện bắt buộc
+## 1. Tạo repository GitHub riêng
 
-1. Tài khoản GitHub để chứa mã nguồn (repo có thể để private).
-2. Tài khoản Render được phép đọc repo GitHub và tạo web service/database.
-3. Với giá FireAnt thật: hợp đồng/quyền DataFeed phù hợp và tài liệu kỹ thuật chỉ rõ endpoint nến, tham số, xác thực, response schema/field map. FireAnt token không gửi trong chat.
+Cách ít thao tác lệnh nhất:
 
-## Cách triển khai không dùng Docker/PowerShell trên máy cá nhân
+1. Tạo tài khoản tại https://github.com/signup và xác minh email.
+2. Cài GitHub Desktop tại https://desktop.github.com/ và đăng nhập.
+3. Giải nén gói `StockVision-HOSE-Web-0.6-Production-Ready.zip` (bản có thư mục `.git`). Trong GitHub Desktop chọn **File → Add Local Repository**, trỏ vào thư mục giải nén.
+4. Chọn **Publish repository**, đặt tên `StockVision-HOSE-Web`, bật **Keep this code private**, rồi Publish.
+5. Mở tab **Actions**, chờ workflow `StockVision CI` hoàn tất thành công. Nếu CI chưa chạy, kiểm tra repository Settings → Actions.
 
-1. Tải `StockVision-HOSE-Web-0.5-Repo-Ready.zip`, giải nén; đây là nhánh Web 0.5 dựa trên mã nguồn Windows EXE 0.4.
-2. Tạo một repository private mới trong GitHub. Trong trang repo, dùng **Add file → Upload files** để upload nội dung bên trong thư mục dự án (bao gồm `render.yaml`, `Dockerfile`, `requirements.txt`, `backend/`, `scripts/`, `tests/`, `docs/`, `.github/workflows/ci.yml`). Commit.
-3. Đăng nhập Render → **New + → Blueprint** → chọn repository vừa tạo. Render đọc `render.yaml`, trình bày các dịch vụ `stockvision-hose` và `stockvision-db`; kiểm tra các tài nguyên/chi phí trước khi bấm deploy.
-4. Chờ lần build đầu hoàn tất. Render cấp URL HTTPS dạng `https://<tên-dịch-vụ>.onrender.com`; tự mở `/api/v1/health` và `/api/v1/providers/status` để kiểm tra trạng thái.
-5. Khi Render yêu cầu `APP_ACCESS_PASSWORD`, nhập một mật khẩu dài và riêng chỉ dùng cho StockVision (không gửi vào chat). `APP_SESSION_SECRET` được Render tự sinh. Hãy chọn mật khẩu dài tối thiểu 12 ký tự; backend giới hạn 10 lần đăng nhập sai trong cửa sổ 15 phút cho mỗi IP (best-effort của MVP). Mở web URL; màn hình đăng nhập bảo vệ API phân tích. Giao diện tự gọi API cùng domain sau khi đăng nhập. Dữ liệu phải ghi **DEMO** cho đến khi nạp dữ liệu đã được cấp phép.
+Nếu dùng bản source ZIP không kèm `.git`, tạo repository Private ở GitHub, rồi dùng GitHub Desktop **File → Add Local Repository** sau khi khởi tạo repo local; không tải `.env` hoặc database file lên GitHub.
 
-Gói repo-ready này chưa tạo GitHub remote hoặc Render resource thay cho bro. Những bước đó cần tài khoản GitHub/Render đã kết nối và người có quyền phải phê duyệt tạo cloud resource.
+## 2. Tạo tài khoản và triển khai Render
 
-## Thiết lập FireAnt — chỉ sau khi được cấp quyền
+1. Tạo tài khoản tại https://dashboard.render.com/register và xác minh email.
+2. Chọn **New → Blueprint**, kết nối GitHub và chỉ cấp quyền repository StockVision cần thiết.
+3. Chọn `StockVision-HOSE-Web`, branch `main`, Blueprint path `render.yaml`.
+4. Kiểm tra danh sách resource và chi phí. Production Blueprint tạo web plan Starter và PostgreSQL Basic-256mb; ước tính tham khảo khoảng US$13/tháng trước băng thông/lưu trữ phát sinh. Kiểm tra giá hiện hành ở https://render.com/pricing. Chỉ nhấn Deploy khi đồng ý chi phí.
+5. Khi Render hỏi `APP_ACCESS_PASSWORD`, tự tạo mật khẩu riêng ít nhất 16 ký tự rồi nhập trực tiếp vào Render. `APP_SESSION_SECRET` được Render tự sinh. Không commit secrets.
+6. Chờ CI pass và Render deploy; mở URL service `/api/v1/health`. Cần thấy `status=ok` và `database=ok`.
+7. Mở URL gốc, đăng nhập rồi kiểm tra `/api/v1/providers/status` và `/api/v1/providers/public/sync-status`.
 
-Mở Render → service `stockvision-hose` → Environment. Đặt những giá trị chỉ khi FireAnt xác nhận/đưa vào gói của bro:
+## 3. Xác nhận đồng bộ dữ liệu trực tuyến
 
-- `FIREANT_API_TOKEN`: secret DataFeed ở phía server.
-- `FIREANT_LICENSE_CONFIRMED=true`: xác nhận nội bộ sau khi đã có quyền sử dụng/lưu trữ dữ liệu; đây không thay hợp đồng.
-- `FIREANT_BARS_PATH`, `FIREANT_BARS_QUERY_JSON`, `FIREANT_BARS_DATA_KEY`, `FIREANT_BAR_FIELD_MAP_JSON`, `FIREANT_AUTH_SCHEME`: cấu hình đúng từng ký tự theo technical spec được cấp. Không tự đoán endpoint.
-- `MARKET_DATA_PROVIDER=fireant`.
+Không dựa chỉ vào `ready=true` hoặc việc package được cài. Cần một lần sync thực tế có `status=success` hoặc `partial`, `completed_at`, `bars_saved > 0`, danh sách `upstream_sources` quan sát được và dữ liệu nến hợp lệ. Kiểm tra thêm ngày của nến mới nhất, trường nguồn và số bản ghi bị từ chối. Nếu adapter chỉ trả cache, không coi đó là chứng minh đã gọi upstream.
 
-Giữ `DEMO_MODE=true` cho đến khi đã xác minh payload live, lưu dữ liệu vào PostgreSQL, đối chiếu timestamp/đơn vị/giấy phép và chạy kiểm thử. Chỉ sau đó mới đổi `DEMO_MODE=false`. Adapter hiện tập trung ở dữ liệu OHLCV; chưa tuyên bố feed bảng giá realtime nếu FireAnt chưa cung cấp một spec được cấp phép cho chức năng đó.
+Nguồn công khai chủ yếu phục vụ nến lịch sử/EOD, không cam kết realtime. Nếu provider API đổi cấu trúc hoặc từ chối truy cập, cần đọc logs và trạng thái đồng bộ trước khi đổi bộ chuẩn hóa. Điều khoản sử dụng/lưu trữ/tái phân phối vẫn phụ thuộc từng nhà cung cấp.
 
-## Cài app trên iPhone vật lý
+## 4. Cài lên iPhone
 
-1. Sau khi Render deploy xong, mở URL HTTPS bằng **Safari** trên iPhone.
-2. Nhấn **Chia sẻ → Thêm vào Màn hình chính**.
-3. Bật **Open as Web App / Mở dưới dạng ứng dụng** nếu tùy chọn này xuất hiện, rồi nhấn **Thêm**.
-4. Mở biểu tượng StockVision trên màn hình chính. Trên cùng origin, PWA sẽ gọi `/api/v1/market/overview` tự động; API không được cache khi offline.
+1. Mở URL HTTPS trên Safari iPhone.
+2. Chọn **Chia sẻ → Thêm vào Màn hình chính → Thêm**.
+3. Mở icon StockVision trên màn hình chính. Đây là PWA, không phải ứng dụng `.ipa`/App Store.
 
-Đây là một **PWA cài từ Safari**, không phải file native `.ipa`/App Store. Muốn native iOS/TestFlight cần project Xcode, macOS và ký bằng Apple Developer account.
+## Trạng thái bàn giao
 
-## Giới hạn/chi phí
-
-- Render Blueprint dùng Free web service và Free Postgres cho preview. Render cho biết Free Postgres sẽ hết hạn sau 30 ngày; không lưu dữ liệu duy nhất/quan trọng trong database thử nghiệm Free. Xác nhận bảng giá hiện hành trước khi duyệt deploy.
-- API hiện là read-only và có một mật khẩu truy cập chung (chưa có tài khoản riêng/phân quyền từng người); không nhập thông tin tài khoản giao dịch, không đưa API token vào frontend, và không coi URL không công khai là biện pháp bảo mật.
-- Không tự động đặt lệnh; không dùng giá demo làm cơ sở đầu tư.
+Bộ mã và Blueprint đã kiểm tra offline. Tài khoản, repository remote, Render service, URL HTTPS và đồng bộ live **chưa được tạo/xác nhận** bởi gói zip. Chủ tài khoản phải tự xác minh/ủy quyền và duyệt chi phí; không gửi mật khẩu/tokens qua chat.
