@@ -1,0 +1,28 @@
+StockVision HOSE Windows EXE build status
+========================================
+
+This bundle contains a PyInstaller spec and a one-click Windows build script.
+It does NOT contain a pre-built StockVisionHOSE.exe binary.
+
+Why:
+- The current build environment is Linux.
+- PyInstaller is not a Windows cross-compiler. A real Windows executable must be built on Windows (or a Windows build runner).
+- We have not claimed a Windows build or a physical Windows/WebView2 smoke test that was not run.
+
+To create the real EXE on Windows:
+1. Install Python 3.11-3.13 x64 (recommend Python 3.12) from https://www.python.org/downloads/windows/; enable Add Python to PATH.
+2. Extract this package into a writable folder.
+3. Double-click BUILD_WINDOWS_EXE.bat.
+4. After successful completion, run dist\StockVisionHOSE.exe.
+
+Build output behavior:
+- The final EXE bundles Python and Python dependencies; Python is not needed to run it after it is built.
+- Microsoft Edge WebView2 Runtime must be installed on Windows for the Edge Chromium desktop window.
+- The first launch creates %LOCALAPPDATA%\StockVisionHOSE\.env and stockvision_local.db; logs go under %LOCALAPPDATA%\StockVisionHOSE\logs.
+- FireAnt is not live-enabled by default. The app stays in demo mode until FireAnt's authorized API/DataFeed contract and mapping are configured locally.
+- The executable is not code-signed; Windows SmartScreen may warn about an unknown publisher.
+
+Source-level validation in this environment:
+- pytest: 118 passed.
+- Python compileall: passed.
+- The Windows build script itself was not executed on Windows in this environment.

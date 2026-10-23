@@ -1,0 +1,65 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: stockvision
+      POSTGRES_USER: stockvision
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change_this_password}
+      TZ: Asia/Ho_Chi_Minh
+    ports:
+      - "127.0.0.1:5434:5432"
+    volumes:
+      - stockvision_pg:/var/lib/postgresql/data
+      - ./backend/sql/001_init.sql:/docker-entrypoint-initdb.d/001_init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U stockvision -d stockvision"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - stockvision_redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  api:
+    build: .
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://stockvision:${POSTGRES_PASSWORD:-change_this_password}@db:5432/stockvision
+      REDIS_URL: redis://redis:6379/0
+      PYTHONPATH: /app/backend
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  tcbs-stream:
+    build: .
+    command: ["python", "-m", "app.run_tcbs_stream"]
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://stockvision:${POSTGRES_PASSWORD:-change_this_password}@db:5432/stockvision
+      PYTHONPATH: /app/backend
+      ENABLE_TCBS_STREAM: "true"
+    depends_on:
+      db:
+        condition: service_healthy
+    profiles: ["live"]
+    restart: unless-stopped
+
+volumes:
+  stockvision_pg:
+  stockvision_redis:

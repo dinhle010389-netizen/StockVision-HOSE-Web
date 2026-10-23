@@ -1,0 +1,20 @@
+StockVision HOSE Web 0.5 — Public Data Edition
+Status: WEB DEPLOYMENT PACKAGE PREPARED; REMOTE DEPLOYMENT NOT EXECUTED.
+Base source: StockVision_HOSE_Windows_EXE_0.4 (copied into a separate branch; original remains unchanged).
+
+Included:
+- FastAPI backend + PostgreSQL/SQLite support
+- Render Blueprint and Dockerfile
+- Same-origin Market Overview + PWA routes
+- Pinned public multi-source data adapter (vn-market-data v0.3.0)
+- Scheduled/manual EOD sync with data provenance notes and safe status endpoints
+- Retained optional FireAnt/TCBS adapters
+- Hermitian covariance-spectrum risk module
+
+Not claimed:
+- No live public-source request was executed at package build time.
+- No user's Render/GitHub account was accessed or deployed.
+- No authenticated FireAnt/TCBS DataFeed connection has been tested.
+- No URL HTTPS for this project has been generated.
+
+To deploy: create a private repository from this package, import it as a Render Blueprint, set APP_ACCESS_PASSWORD and verify API health/provider sync status. Never commit .env or provider credentials.

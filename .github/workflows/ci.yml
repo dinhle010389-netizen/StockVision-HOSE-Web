@@ -1,0 +1,43 @@
+name: StockVision CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Compile Python
+        run: python -m compileall -q backend scripts desktop_launcher.py
+      - name: Run test suite
+        env:
+          PYTHONPATH: backend
+          DEMO_MODE: 'true'
+          AUTO_CREATE_TABLES: 'true'
+          DATABASE_URL: sqlite:///./ci_test.db
+        run: pytest -q --disable-warnings
+      - name: Check OpenAPI JSON and Render Blueprint
+        run: |
+          python - <<'PY'
+          import json, yaml
+          json.load(open('docs/openapi.json', encoding='utf-8'))
+          cfg = yaml.safe_load(open('render.yaml', encoding='utf-8'))
+          assert any(s.get('name') == 'stockvision-hose' for s in cfg['services'])
+          assert any(d.get('name') == 'stockvision-db' for d in cfg['databases'])
+          print('OpenAPI and Render Blueprint parse successfully.')
+          PY
+      - name: Secret hygiene check
+        run: python scripts/check_repo_secrets.py

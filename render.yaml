@@ -1,0 +1,69 @@
+# Preview deployment blueprint for StockVision HOSE.
+# IMPORTANT: free web services sleep after 15 minutes idle, and free Postgres expires after 30 days.
+# Use only for an evaluation; continuous scheduled sync / long-term history needs an appropriate paid plan.
+services:
+  - type: web
+    name: stockvision-hose
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: LOG_LEVEL
+        value: INFO
+      - key: APP_ACCESS_PASSWORD
+        sync: false
+      - key: APP_SESSION_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: stockvision-db
+          property: connectionString
+      - key: AUTO_CREATE_TABLES
+        value: "true"
+      - key: DEMO_MODE
+        value: "false"
+      - key: MARKET_DATA_PROVIDER
+        value: public
+      - key: PUBLIC_DATA_AUTO_SYNC_ON_STARTUP
+        value: "true"
+      - key: PUBLIC_DATA_SYNC_INTERVAL_MINUTES
+        value: "60"
+      - key: PUBLIC_DATA_LOOKBACK_DAYS
+        value: "730"
+      - key: PUBLIC_DATA_CACHE_TTL_SECONDS
+        value: "900"
+      - key: PUBLIC_DATA_SYMBOLS
+        value: FPT,VCB,HPG,SSI,MWG,TCB,VIC,VHM
+      - key: PUBLIC_DATA_INDEX_SYMBOLS
+        value: VNINDEX,VN30
+      - key: VN_MARKET_DATA_DB
+        value: /tmp/vn_market_data.db
+      - key: FIREANT_BASE_URL
+        value: https://api.fireant.vn
+      - key: FIREANT_API_TOKEN
+        value: ""
+      - key: FIREANT_LICENSE_CONFIRMED
+        value: "false"
+      - key: FIREANT_BARS_PATH
+        value: ""
+      - key: FIREANT_BARS_QUERY_JSON
+        value: "{}"
+      - key: FIREANT_BARS_DATA_KEY
+        value: data
+      - key: FIREANT_AUTH_SCHEME
+        value: Bearer
+      - key: FIREANT_BAR_FIELD_MAP_JSON
+        value: '{"date":"date","open":"open","high":"high","low":"low","close":"close","volume":"volume","value":"value","adjusted_close":"adjustedClose","is_final":"isFinal"}'
+      - key: PYTHONPATH
+        value: /app/backend
+
+databases:
+  - name: stockvision-db
+    databaseName: stockvision
+    user: stockvision
+    plan: free
+    region: singapore

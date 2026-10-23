@@ -1,0 +1,5 @@
+Legacy desktop QA notes inherited from StockVision HOSE Windows EXE 0.4.
+
+The Windows launcher/spec/build scripts are preserved as source-base artifacts in this Web 0.5 branch. The 126/126 test count in docs/TEST_REPORT.txt applies to the current Web Public Data branch source, not to an actual Windows PE executable.
+
+A Windows .exe must be built on Windows with BUILD_WINDOWS_EXE.bat and tested on a real Windows host. Public-data support for the desktop launcher is available only if the optional `requirements-public-data.txt` dependency is installed and DEMO_MODE resolves to false. This package has not built or signed an EXE on Windows.

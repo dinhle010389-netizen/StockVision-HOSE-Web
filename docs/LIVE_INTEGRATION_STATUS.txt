@@ -1,0 +1,13 @@
+StockVision HOSE 0.1.2 FireAnt provider status
+
+Offline verification:
+- FireAntClient configuration/mapping/mock HTTP tests: included in pytest suite.
+- 95 tests passed on 2026-10-23.
+- Offline concurrency stress: 1,000 threads x 1,000 rounds passed (1,000,000 rounds; 5,050,000 assertions; 0 network requests).
+
+Live verification:
+- FireAnt API: NOT EXECUTED. Awaiting FireAnt-issued endpoint/schema/auth details and authorized token.
+- PostgreSQL production/staging server: NOT EXECUTED. No server connection supplied in this environment.
+- Provider status route does not expose credentials and reports network_tested=false unless independently verified.
+
+The adapter refuses to run without an explicit endpoint path and FIREANT_LICENSE_CONFIRMED=true. This flag is an internal safety gate and does not replace vendor permission/contract.

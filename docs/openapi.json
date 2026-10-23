@@ -1,0 +1,717 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "StockVision HOSE API",
+    "description": "Read-only market overview and risk analytics. No brokerage order routing.",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/v1/health": {
+      "get": {
+        "tags": [
+          "system"
+        ],
+        "summary": "Health",
+        "operationId": "health_api_v1_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/providers/status": {
+      "get": {
+        "tags": [
+          "system"
+        ],
+        "summary": "Providers Status",
+        "description": "Return provider readiness without exposing credentials or raw configuration.",
+        "operationId": "providers_status_api_v1_providers_status_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Providers Status Api V1 Providers Status Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/market/overview": {
+      "get": {
+        "tags": [
+          "market"
+        ],
+        "summary": "Market Overview",
+        "operationId": "market_overview_api_v1_market_overview_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarketOverviewResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/instruments": {
+      "get": {
+        "tags": [
+          "market"
+        ],
+        "summary": "List Instruments",
+        "operationId": "list_instruments_api_v1_instruments_get",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 80
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "name": "exchange",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^(HOSE|HNX|UPCOM)$",
+              "default": "HOSE",
+              "title": "Exchange"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InstrumentSummary"
+                  },
+                  "title": "Response List Instruments Api V1 Instruments Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/risk/hermitian": {
+      "post": {
+        "tags": [
+          "risk"
+        ],
+        "summary": "Hermitian Risk",
+        "operationId": "hermitian_risk_api_v1_risk_hermitian_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CovarianceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CovarianceResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Breadth": {
+        "properties": {
+          "advancers": {
+            "type": "integer",
+            "title": "Advancers",
+            "default": 0
+          },
+          "decliners": {
+            "type": "integer",
+            "title": "Decliners",
+            "default": 0
+          },
+          "unchanged": {
+            "type": "integer",
+            "title": "Unchanged",
+            "default": 0
+          },
+          "observed": {
+            "type": "integer",
+            "title": "Observed",
+            "default": 0
+          },
+          "advance_decline_ratio": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Advance Decline Ratio"
+          }
+        },
+        "type": "object",
+        "title": "Breadth"
+      },
+      "CovarianceRequest": {
+        "properties": {
+          "symbols": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 80,
+            "minItems": 1,
+            "title": "Symbols"
+          },
+          "returns": {
+            "items": {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            "type": "array",
+            "maxItems": 5000,
+            "minItems": 3,
+            "title": "Returns"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "symbols",
+          "returns"
+        ],
+        "title": "CovarianceRequest"
+      },
+      "CovarianceResponse": {
+        "properties": {
+          "symbols": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Symbols"
+          },
+          "observations": {
+            "type": "integer",
+            "title": "Observations"
+          },
+          "covariance": {
+            "items": {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            "type": "array",
+            "title": "Covariance"
+          },
+          "risk_spectrum": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Risk Spectrum"
+          },
+          "interpretation": {
+            "type": "string",
+            "title": "Interpretation"
+          }
+        },
+        "type": "object",
+        "required": [
+          "symbols",
+          "observations",
+          "covariance",
+          "risk_spectrum",
+          "interpretation"
+        ],
+        "title": "CovarianceResponse"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "HealthResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "database": {
+            "type": "string",
+            "title": "Database"
+          },
+          "demo_mode": {
+            "type": "boolean",
+            "title": "Demo Mode"
+          },
+          "tcbs_stream_enabled": {
+            "type": "boolean",
+            "title": "Tcbs Stream Enabled"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Timestamp"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "database",
+          "demo_mode",
+          "tcbs_stream_enabled",
+          "timestamp"
+        ],
+        "title": "HealthResponse"
+      },
+      "IndexSummary": {
+        "properties": {
+          "symbol": {
+            "type": "string",
+            "title": "Symbol"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "last": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last"
+          },
+          "change": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Change"
+          },
+          "change_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Change Pct"
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At"
+          },
+          "is_demo": {
+            "type": "boolean",
+            "title": "Is Demo",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "symbol",
+          "label"
+        ],
+        "title": "IndexSummary"
+      },
+      "InstrumentSummary": {
+        "properties": {
+          "symbol": {
+            "type": "string",
+            "title": "Symbol"
+          },
+          "exchange_code": {
+            "type": "string",
+            "title": "Exchange Code"
+          },
+          "company_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Name"
+          },
+          "sector_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sector Code"
+          },
+          "currency": {
+            "type": "string",
+            "title": "Currency",
+            "default": "VND"
+          },
+          "is_active": {
+            "type": "boolean",
+            "title": "Is Active",
+            "default": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "symbol",
+          "exchange_code"
+        ],
+        "title": "InstrumentSummary"
+      },
+      "MarketOverviewResponse": {
+        "properties": {
+          "exchange": {
+            "type": "string",
+            "title": "Exchange",
+            "default": "HOSE"
+          },
+          "as_of": {
+            "type": "string",
+            "format": "date-time",
+            "title": "As Of"
+          },
+          "data_mode": {
+            "type": "string",
+            "enum": [
+              "demo",
+              "database",
+              "empty"
+            ],
+            "title": "Data Mode"
+          },
+          "is_demo": {
+            "type": "boolean",
+            "title": "Is Demo"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "breadth_scope": {
+            "type": "string",
+            "enum": [
+              "market",
+              "tracked_universe",
+              "none"
+            ],
+            "title": "Breadth Scope",
+            "default": "none"
+          },
+          "tracked_value_total": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tracked Value Total"
+          },
+          "freshness_seconds": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Freshness Seconds"
+          },
+          "breadth": {
+            "$ref": "#/components/schemas/Breadth"
+          },
+          "indices": {
+            "items": {
+              "$ref": "#/components/schemas/IndexSummary"
+            },
+            "type": "array",
+            "title": "Indices"
+          },
+          "leaders": {
+            "items": {
+              "$ref": "#/components/schemas/StockMover"
+            },
+            "type": "array",
+            "title": "Leaders"
+          },
+          "laggards": {
+            "items": {
+              "$ref": "#/components/schemas/StockMover"
+            },
+            "type": "array",
+            "title": "Laggards"
+          },
+          "active_stocks": {
+            "items": {
+              "$ref": "#/components/schemas/StockMover"
+            },
+            "type": "array",
+            "title": "Active Stocks"
+          }
+        },
+        "type": "object",
+        "required": [
+          "as_of",
+          "data_mode",
+          "is_demo",
+          "message",
+          "breadth",
+          "indices",
+          "leaders",
+          "laggards"
+        ],
+        "title": "MarketOverviewResponse"
+      },
+      "StockMover": {
+        "properties": {
+          "symbol": {
+            "type": "string",
+            "title": "Symbol"
+          },
+          "company_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Name"
+          },
+          "last_price": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Price"
+          },
+          "change_value": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Change Value"
+          },
+          "change_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Change Pct"
+          },
+          "volume": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Volume"
+          },
+          "matched_value": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Matched Value"
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At"
+          },
+          "is_demo": {
+            "type": "boolean",
+            "title": "Is Demo",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "symbol"
+        ],
+        "title": "StockMover"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

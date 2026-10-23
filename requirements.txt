@@ -1,0 +1,15 @@
+fastapi>=0.115,<1.0
+uvicorn[standard]>=0.30,<1.0
+SQLAlchemy>=2.0,<3.0
+psycopg[binary]>=3.2,<4.0
+pydantic>=2.8,<3.0
+httpx>=0.27,<1.0
+numpy>=2.0,<3.0
+websockets>=13,<16
+python-dotenv>=1.0,<2.0
+pytest>=8.0,<10.0
+itsdangerous>=2.2,<3.0
+
+# Cache-first public data chain, pin to a reviewed release tag.
+vn-market-data @ git+https://github.com/trangcm/vn-market-data.git@v0.3.0
+PyYAML>=6.0,<7.0

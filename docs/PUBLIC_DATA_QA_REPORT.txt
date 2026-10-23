@@ -1,0 +1,31 @@
+StockVision HOSE Web 0.5 — Public Data Edition
+QA report generated: 2026-10-23
+Base source: StockVision_HOSE_Windows_EXE_0.4
+
+AUTOMATED TESTS
+- Command: PYTHONPATH=backend pytest -q --disable-warnings
+- Result: 126 passed
+- Duration: 2.29 seconds (latest recorded complete run before packaging)
+- Python compileall: passed for backend, scripts, and desktop launcher
+- Inline JavaScript syntax check (Node.js --check): passed (1 inline script)
+- render.yaml parse: passed
+- docs/openapi.json parse: passed
+- SQL bootstrap statement splitting: covered by tests
+- Public adapter/sync integration uses fake source payloads and isolated SQLite; no upstream network requests in the unit suite.
+
+FIXES/REGRESSIONS
+- Fixed legacy deployment test expectations for public-data configuration.
+- Generalized the database overview EOD message to avoid always naming FireAnt.
+- Fixed SQLite/SQLAlchemy insertmanyvalues sentinel mismatch by flushing new composite-key timestamp bars individually.
+- Blocked automatic/manual public sync while DEMO_MODE=true to avoid writing live data while the UI intentionally serves demo data.
+
+NOT TESTED LIVE
+- No successful request to DNSE/Vietcap/VNDirect/CafeF was executed as part of this QA pass.
+- network_tested remains false until an operator performs an online check in the deployed environment.
+- No real PostgreSQL host or Render service was accessed in this environment.
+- API rate limits, provider uptime, data terms and redistribution rights remain upstream-specific.
+
+IMPORTANT DATA SCOPE
+- Current StockVision adapter integrates historical/EOD OHLCV and best-effort index daily bars only.
+- This does not establish intraday, tick, order-book or guaranteed realtime coverage.
+- Source package MIT license does not grant redistribution rights for third-party market data.

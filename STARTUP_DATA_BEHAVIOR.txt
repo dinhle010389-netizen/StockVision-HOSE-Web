@@ -1,0 +1,11 @@
+StockVision HOSE Web 0.5 Public Data Edition — startup behavior
+
+- Active provider defaults to `public` in this branch.
+- When DEMO_MODE=false and PUBLIC_DATA_AUTO_SYNC_ON_STARTUP=true, the FastAPI lifespan launches the cache-first public-data sync worker in the background; startup does not wait for network synchronization.
+- The worker synchronizes configured daily OHLCV symbols and makes a best-effort call for configured index daily bars. The interval defaults to 60 minutes, lookback to 730 days, and cache TTL to 900 seconds.
+- When DEMO_MODE=true, the app intentionally avoids automatic network sync and rejects manual sync (HTTP 409). The UI serves clearly labeled demo content; this prevents real data being stored while the dashboard knowingly displays simulation.
+- The provider readiness endpoint does not perform a network health check and reports network_tested=false. Sync status is the operational signal after a real run.
+- When the public provider is absent, a request fails, or no valid bars are returned, the app records a safe status/error rather than inventing real market data.
+- Current production path is daily history/EOD, not guaranteed live pricing, order book or tick data.
+- The upstream library's SQLite cache may be ephemeral on free cloud instances; normalized accepted candles are stored in the main StockVision database.
+- Public endpoints and terms are provider-specific. Data storage/reuse/redistribution must comply with each source's terms.

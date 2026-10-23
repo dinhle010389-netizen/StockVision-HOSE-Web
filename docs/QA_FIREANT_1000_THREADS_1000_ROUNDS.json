@@ -1,0 +1,26 @@
+{
+  "test_name": "fireant_adapter_normalizer_offline_concurrency_stress",
+  "test_date_utc": "2026-10-23T07:07:07.725424+00:00",
+  "threads_requested": 1000,
+  "threads_started": 1000,
+  "threads_completed": 1000,
+  "iterations_per_thread": 1000,
+  "expected_iterations": 1000000,
+  "completed_iterations": 1000000,
+  "runtime_assertions": 5050000,
+  "valid_payloads_accepted": 1000000,
+  "invalid_payloads_rejected": 10000,
+  "network_requests": 0,
+  "live_fireant_tested": false,
+  "elapsed_seconds": 19.351,
+  "throughput_iterations_per_second": 51677.06,
+  "worker_duration_p50_seconds": 9.976,
+  "worker_duration_max_seconds": 19.256,
+  "errors": [],
+  "status": "PASS",
+  "notes": [
+    "All runs used local fixture payloads only; no FireAnt/TCBS endpoint was contacted.",
+    "This tests adapter mapping and normalization concurrency, not a production API or database load test.",
+    "The main thread releases all started workers together after thread creation; partial startup is reported as failure."
+  ]
+}

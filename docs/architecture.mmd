@@ -1,0 +1,11 @@
+flowchart TD
+  TCBS[TCBS iFlash Open API\nREST OHLCV + WebSocket board] --> ADAPTER[Provider adapters\nAuth server-side / reconnect / rate pacing]
+  ADAPTER --> NORM[Normalizer & quality gates\nUTC / price units / OHLC checks / flags]
+  NORM --> PG[(PostgreSQL\nquotes · OHLCV · indices · fundamentals)]
+  NORM --> RAW[(Raw/ingestion audit\nretention subject to license)]
+  PG --> API[FastAPI read-only API]
+  PG --> RISK[Risk engine\nHermitian covariance spectrum]
+  RISK --> API
+  API --> UI[Responsive Market Overview / PWA]
+  REDIS[(Redis cache / future queue)] -. optional .- API
+  API -. JSON API; never cached as static shell .- UI

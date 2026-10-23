@@ -1,0 +1,2 @@
+# Optional provider for Windows/source deployments. Requires Git for the VCS install.
+vn-market-data @ git+https://github.com/trangcm/vn-market-data.git@v0.3.0

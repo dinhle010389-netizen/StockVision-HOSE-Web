@@ -1,0 +1,104 @@
+StockVision HOSE 0.1 — 100-factor x 1,000-round offline stress test
+seed=20261023; factors=100; rounds=1000; factor_runs=100000
+assertions=216000; failures=0; elapsed_seconds=15.22
+factor coverage:
+001. F001 valid symbol 'FPT' [symbol] — 1000 rounds
+002. F002 valid symbol 'vcb' [symbol] — 1000 rounds
+003. F003 valid symbol ' hpg ' [symbol] — 1000 rounds
+004. F004 valid symbol 'ssi' [symbol] — 1000 rounds
+005. F005 valid symbol 'MWG' [symbol] — 1000 rounds
+006. F006 valid symbol 'tcb' [symbol] — 1000 rounds
+007. F007 valid symbol 'VIC' [symbol] — 1000 rounds
+008. F008 valid symbol 'vhm' [symbol] — 1000 rounds
+009. F009 valid symbol 'ABC.X' [symbol] — 1000 rounds
+010. F010 valid symbol 'ABC-1' [symbol] — 1000 rounds
+011. F011 reject invalid symbol '' [symbol] — 1000 rounds
+012. F012 reject invalid symbol ' ' [symbol] — 1000 rounds
+013. F013 reject invalid symbol 'FPT;DROP TABLE' [symbol] — 1000 rounds
+014. F014 reject invalid symbol 'A B' [symbol] — 1000 rounds
+015. F015 reject invalid symbol 'A/B' [symbol] — 1000 rounds
+016. F016 reject invalid symbol 'A@B' [symbol] — 1000 rounds
+017. F017 reject invalid symbol 'ABCDEFGHIJK' [symbol] — 1000 rounds
+018. F018 reject invalid symbol 123 [symbol] — 1000 rounds
+019. F019 decimal valid/optional '123.45' [numeric parsing] — 1000 rounds
+020. F020 decimal valid/optional '1,234.5' [numeric parsing] — 1000 rounds
+021. F021 decimal valid/optional '1e3' [numeric parsing] — 1000 rounds
+022. F022 decimal valid/optional None [numeric parsing] — 1000 rounds
+023. F023 decimal valid/optional '' [numeric parsing] — 1000 rounds
+024. F024 nonnegative integer '0' [numeric parsing] — 1000 rounds
+025. F025 nonnegative integer '1,000' [numeric parsing] — 1000 rounds
+026. F026 nonnegative integer Decimal('4') [numeric parsing] — 1000 rounds
+027. F027 nonnegative integer '1.5' [numeric parsing] — 1000 rounds
+028. F028 nonnegative integer '-1' [numeric parsing] — 1000 rounds
+029. F029 timestamp valid '2026-10-23' [timestamps] — 1000 rounds
+030. F030 timestamp valid '2026-10-23T10:30:00Z' [timestamps] — 1000 rounds
+031. F031 timestamp valid '2026-10-23T17:30:00+07:00' [timestamps] — 1000 rounds
+032. F032 timestamp valid 1792749600 [timestamps] — 1000 rounds
+033. F033 timestamp valid datetime.datetime(2026, 10, 23, 10, 0, tzinfo=datetime.timezone.utc) [timestamps] — 1000 rounds
+034. F034 reject timestamp 'not-a-date' [timestamps] — 1000 rounds
+035. F035 reject timestamp -1 [timestamps] — 1000 rounds
+036. F036 reject timestamp nan [timestamps] — 1000 rounds
+037. F037 reject timestamp inf [timestamps] — 1000 rounds
+038. F038 reject timestamp 1e+100 [timestamps] — 1000 rounds
+039. F039 quote valid aliases symbol/matchPrice [quote normalization] — 1000 rounds
+040. F040 quote valid aliases ticker/closePrice [quote normalization] — 1000 rounds
+041. F041 quote valid aliases code/lastPrice [quote normalization] — 1000 rounds
+042. F042 quote valid aliases symbol/last_price [quote normalization] — 1000 rounds
+043. F043 quote valid aliases ticker/price [quote normalization] — 1000 rounds
+044. F044 quote valid aliases code/matchPrice [quote normalization] — 1000 rounds
+045. F045 quote valid aliases symbol/closePrice [quote normalization] — 1000 rounds
+046. F046 quote valid aliases ticker/lastPrice [quote normalization] — 1000 rounds
+047. F047 quote valid aliases code/last_price [quote normalization] — 1000 rounds
+048. F048 quote valid aliases symbol/price [quote normalization] — 1000 rounds
+049. F049 reject quote payload 1 [quote normalization] — 1000 rounds
+050. F050 reject quote payload 2 [quote normalization] — 1000 rounds
+051. F051 reject quote payload 3 [quote normalization] — 1000 rounds
+052. F052 reject quote payload 4 [quote normalization] — 1000 rounds
+053. F053 reject quote payload 5 [quote normalization] — 1000 rounds
+054. F054 reject quote payload 6 [quote normalization] — 1000 rounds
+055. F055 reject quote payload 7 [quote normalization] — 1000 rounds
+056. F056 reject quote payload 8 [quote normalization] — 1000 rounds
+057. F057 reject quote payload 9 [quote normalization] — 1000 rounds
+058. F058 reject quote payload 10 [quote normalization] — 1000 rounds
+059. F059 valid OHLCV timeframe 1m [bar normalization] — 1000 rounds
+060. F060 valid OHLCV timeframe 3m [bar normalization] — 1000 rounds
+061. F061 valid OHLCV timeframe 5m [bar normalization] — 1000 rounds
+062. F062 valid OHLCV timeframe 15m [bar normalization] — 1000 rounds
+063. F063 valid OHLCV timeframe 30m [bar normalization] — 1000 rounds
+064. F064 valid OHLCV timeframe 1h [bar normalization] — 1000 rounds
+065. F065 valid OHLCV timeframe 1d [bar normalization] — 1000 rounds
+066. F066 valid OHLCV timeframe 1w [bar normalization] — 1000 rounds
+067. F067 valid OHLCV timeframe 1mo [bar normalization] — 1000 rounds
+068. F068 valid OHLCV timeframe 1d [bar normalization] — 1000 rounds
+069. F069 reject OHLCV edge case 1 [bar normalization] — 1000 rounds
+070. F070 reject OHLCV edge case 2 [bar normalization] — 1000 rounds
+071. F071 reject OHLCV edge case 3 [bar normalization] — 1000 rounds
+072. F072 reject OHLCV edge case 4 [bar normalization] — 1000 rounds
+073. F073 reject OHLCV edge case 5 [bar normalization] — 1000 rounds
+074. F074 reject OHLCV edge case 6 [bar normalization] — 1000 rounds
+075. F075 reject OHLCV edge case 7 [bar normalization] — 1000 rounds
+076. F076 reject OHLCV edge case 8 [bar normalization] — 1000 rounds
+077. F077 reject OHLCV edge case 9 [bar normalization] — 1000 rounds
+078. F078 reject OHLCV edge case 10 [bar normalization] — 1000 rounds
+079. F079 Hermitian PSD spectrum dimension 1 [Hermitian risk] — 1000 rounds
+080. F080 Hermitian PSD spectrum dimension 2 [Hermitian risk] — 1000 rounds
+081. F081 Hermitian PSD spectrum dimension 3 [Hermitian risk] — 1000 rounds
+082. F082 Hermitian PSD spectrum dimension 4 [Hermitian risk] — 1000 rounds
+083. F083 Hermitian PSD spectrum dimension 5 [Hermitian risk] — 1000 rounds
+084. F084 Hermitian PSD spectrum dimension 6 [Hermitian risk] — 1000 rounds
+085. F085 Hermitian PSD spectrum dimension 7 [Hermitian risk] — 1000 rounds
+086. F086 Hermitian PSD spectrum dimension 8 [Hermitian risk] — 1000 rounds
+087. F087 Hermitian PSD spectrum dimension 9 [Hermitian risk] — 1000 rounds
+088. F088 Hermitian PSD spectrum dimension 10 [Hermitian risk] — 1000 rounds
+089. F089 reject invalid Hermitian matrix 1 [Hermitian risk] — 1000 rounds
+090. F090 reject invalid Hermitian matrix 2 [Hermitian risk] — 1000 rounds
+091. F091 reject invalid Hermitian matrix 3 [Hermitian risk] — 1000 rounds
+092. F092 reject invalid Hermitian matrix 4 [Hermitian risk] — 1000 rounds
+093. F093 covariance estimated for 1 symbols [covariance] — 1000 rounds
+094. F094 covariance estimated for 2 symbols [covariance] — 1000 rounds
+095. F095 covariance estimated for 5 symbols [covariance] — 1000 rounds
+096. F096 health API status and database [API] — 1000 rounds
+097. F097 Market Overview demo labeling and shape [API] — 1000 rounds
+098. F098 instruments query validation and limits [API] — 1000 rounds
+099. F099 Hermitian risk API valid and invalid payloads [API] — 1000 rounds
+100. F100 dashboard, PWA assets and OpenAPI document [API/assets] — 1000 rounds

@@ -1,0 +1,7 @@
+FireAnt startup sync behavior
+
+On launch, the local desktop FastAPI app starts a background sync task. The task calls FireAnt only if the access token, licensed access confirmation, HTTPS base URL, authorized endpoint path, query template, data key and field map are all valid. Otherwise it returns NOT_CONFIGURED with zero outbound requests.
+
+Daily bars are normalized via normalize_tcbs_bar, stored/upserted into the local SQLite OHLCVBar table, and shown in Market Overview if quote snapshots do not exist. The UI says these are daily OHLCV bars, not guaranteed live quotes.
+
+Set connection-specific values in .env using FireAnt-issued documentation. Never commit/share .env. Default config intentionally has no token and no endpoint path.

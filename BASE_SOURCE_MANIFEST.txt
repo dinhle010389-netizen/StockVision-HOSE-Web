@@ -1,0 +1,13 @@
+StockVision HOSE Web 0.5 Public Data Edition — Base source manifest
+
+Base used: /mnt/data/StockVision_HOSE_Windows_EXE_0.4
+New working branch: StockVision_HOSE_Web_0.5_Public_Data
+
+The web branch was created as a separate copy of the Windows EXE 0.4 source directory. The original 0.4 directory was not overwritten by this branch. The copy retains prior backend, data model/schema, normalizers, Hermitian risk analysis, FastAPI session gate, PWA frontend, FireAnt and TCBS adapters, desktop_launcher.py, PyInstaller spec, and Windows launch/build scripts. New Public Data Edition files/configuration and changes are described in CHANGELOG_WEB_0.5.md.
+
+Changes in Web 0.5:
+- Default provider on the web branch is public multi-source.
+- Added vn-market-data v0.3.0 adapter, public daily OHLCV scheduler, index-bar best-effort sync, source status endpoints and Market Overview UI.
+- Demo mode blocks both automatic network sync and manual sync.
+- Existing FireAnt and TCBS source adapters remain optional and are not deleted.
+- Hermitian covariance-spectrum risk analysis is retained; Schrödinger and Born are not included in production flow.

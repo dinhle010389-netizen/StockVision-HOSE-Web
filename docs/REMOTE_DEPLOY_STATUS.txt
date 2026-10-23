@@ -1,0 +1,20 @@
+StockVision HOSE Web 0.5 — remote/live status
+
+LOCAL REPOSITORY PREPARATION: complete; Git repository initialized and initial commit created in the downloadable Git bundle.
+GITHUB PRIVATE REMOTE: NOT CREATED. No authorized GitHub account/repository integration was available in this execution environment.
+RENDER BLUEPRINT: YAML validated locally; not deployed to a Render workspace.
+HTTPS URL: not created.
+APP_ACCESS_PASSWORD: Blueprint is configured with sync:false. The real password must be entered privately in Render's creation flow/Dashboard, not committed.
+APP_SESSION_SECRET: Render generateValue=true.
+LIVE PUBLIC DATA SYNC: NOT CONFIRMED.
+ENVIRONMENT NETWORK CHECK: urllib requests to GitHub API and Render docs failed with temporary DNS resolution failure. `vn-market-data` is not installed in this local runtime. Therefore no real upstream request was completed here.
+PRODUCTION POSTGRESQL: not connected. Automated database integration checks use isolated SQLite.
+
+LOCAL CHECKS:
+- pytest: 128 passed, 0 failed.
+- Concurrent cross-check: 100/100 worker jobs passed, 3,100 assertions, 0 failed jobs.
+- YAML/OpenAPI parse: pass.
+- Python compile: pass.
+- Secret-hygiene scan: pass.
+
+Free Render preview warning: current Render documentation says free web services sleep after 15 minutes idle and use an ephemeral filesystem, and free PostgreSQL expires after 30 days. This Blueprint is therefore for evaluation only, not guaranteed continuous sync or durable data storage. See https://render.com/docs/free.

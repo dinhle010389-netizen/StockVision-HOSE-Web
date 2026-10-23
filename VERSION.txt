@@ -1,0 +1,5 @@
+StockVision HOSE Web 0.5 — Public Data Edition
+Base source: StockVision_HOSE_Windows_EXE_0.4
+Architecture: FastAPI + SQLAlchemy + SQLite/PostgreSQL
+Public source chain: vn-market-data pinned v0.3.0 (DNSE/Vietcap/VNDirect/CafeF capabilities)
+Production limits: EOD / index / board snapshots depend on upstream availability; not inherently realtime.
