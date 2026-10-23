@@ -1,20 +1,11 @@
-StockVision HOSE Web 0.5 — Public Data Edition
-Status: WEB DEPLOYMENT PACKAGE PREPARED; REMOTE DEPLOYMENT NOT EXECUTED.
-Base source: StockVision_HOSE_Windows_EXE_0.4 (copied into a separate branch; original remains unchanged).
+StockVision HOSE Web 0.6 — Production-ready deployment bundle
 
-Included:
-- FastAPI backend + PostgreSQL/SQLite support
-- Render Blueprint and Dockerfile
-- Same-origin Market Overview + PWA routes
-- Pinned public multi-source data adapter (vn-market-data v0.3.0)
-- Scheduled/manual EOD sync with data provenance notes and safe status endpoints
-- Retained optional FireAnt/TCBS adapters
-- Hermitian covariance-spectrum risk module
-
-Not claimed:
-- No live public-source request was executed at package build time.
-- No user's Render/GitHub account was accessed or deployed.
-- No authenticated FireAnt/TCBS DataFeed connection has been tested.
-- No URL HTTPS for this project has been generated.
-
-To deploy: create a private repository from this package, import it as a Render Blueprint, set APP_ACCESS_PASSWORD and verify API health/provider sync status. Never commit .env or provider credentials.
+Source baseline: StockVision HOSE Web 0.5 Public Data Edition.
+UI/API: single-origin FastAPI-served Market Overview + PWA.
+Production Blueprint: render.yaml (paid Starter web + Basic-256mb PostgreSQL; CI-gated auto deploy; Singapore region).
+Preview Blueprint: render.preview.yaml (free/demo only; not for long-term operations).
+Secrets: no real password or provider token included. Render must generate APP_SESSION_SECRET and owner must enter APP_ACCESS_PASSWORD directly in Dashboard.
+Repository: local Git history maintained in the publish-ready directory/bundle; remote GitHub repository has NOT been created.
+Render: Blueprint prepared/locally validated; cloud services and HTTPS URL have NOT been provisioned.
+Live data: no real upstream sync is claimed until provider sync status reports success/partial with source calls observed and bars saved.
+Validation: see docs/TEST_REPORT.txt and docs/PRODUCTION_COSTS_AND_RELIABILITY_VI.md.

@@ -1,14 +1,20 @@
-# Preview deployment blueprint for StockVision HOSE.
-# IMPORTANT: free web services sleep after 15 minutes idle, and free Postgres expires after 30 days.
-# Use only for an evaluation; continuous scheduled sync / long-term history needs an appropriate paid plan.
+# StockVision HOSE production Blueprint.
+# IMPORTANT: deploying this Blueprint creates billable resources.
+# Expected baseline on Render's published pricing (Oct 2026): approximately $13/month
+# for a Starter web service + Basic-256mb Postgres, before usage/storage extras.
+# Review https://render.com/pricing before clicking Deploy Blueprint.
+previews:
+  generation: off
+
 services:
   - type: web
     name: stockvision-hose
     runtime: docker
-    plan: free
+    plan: starter
     region: singapore
     dockerfilePath: ./Dockerfile
     healthCheckPath: /api/v1/health
+    autoDeployTrigger: checksPass
     envVars:
       - key: APP_ENV
         value: production
@@ -65,5 +71,6 @@ databases:
   - name: stockvision-db
     databaseName: stockvision
     user: stockvision
-    plan: free
+    plan: basic-256mb
     region: singapore
+    ipAllowList: []

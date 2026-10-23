@@ -31,7 +31,7 @@ def test_project_sql_bootstrap_files_are_splittable_and_nonempty():
     assert len(_split_sql_statements((sql_dir / "001_init.sql").read_text(encoding="utf-8"))) >= 30
 
 
-def test_render_blueprint_uses_free_preview_and_secrets_are_blank():
+def test_render_blueprint_uses_paid_production_resources_and_secrets_are_blank():
     cfg = yaml.safe_load((ROOT / "render.yaml").read_text(encoding="utf-8"))
     service = next(x for x in cfg["services"] if x["name"] == "stockvision-hose")
     db = next(x for x in cfg["databases"] if x["name"] == "stockvision-db")
@@ -41,7 +41,13 @@ def test_render_blueprint_uses_free_preview_and_secrets_are_blank():
     assert next(e for e in service["envVars"] if e["key"] == "PUBLIC_DATA_AUTO_SYNC_ON_STARTUP")["value"] == "true"
     assert next(e for e in service["envVars"] if e["key"] == "FIREANT_API_TOKEN")["value"] == ""
     assert next(e for e in service["envVars"] if e["key"] == "FIREANT_LICENSE_CONFIRMED")["value"] == "false"
-    assert db["plan"] == "free"
+    assert service["plan"] == "starter"
+    assert service["autoDeployTrigger"] == "checksPass"
+    assert db["plan"] == "basic-256mb"
+    assert db["ipAllowList"] == []
+    assert cfg["previews"]["generation"] == "off"
+    assert not any(x.get("plan") == "free" for x in cfg["services"])
+    assert not any(x.get("plan") == "free" for x in cfg["databases"])
 
 
 def test_pwa_assets_have_root_paths_and_do_not_cache_api():
@@ -119,3 +125,13 @@ def test_login_endpoint_throttles_repeated_failed_attempts():
     finally:
         _LOGIN_ATTEMPTS.clear()
         object.__setattr__(settings, "app_access_password", original)
+
+
+def test_preview_blueprint_is_explicitly_non_production():
+    cfg = yaml.safe_load((ROOT / "render.preview.yaml").read_text(encoding="utf-8"))
+    service = cfg["services"][0]
+    db = cfg["databases"][0]
+    assert service["plan"] == "free"
+    assert db["plan"] == "free"
+    assert next(e for e in service["envVars"] if e["key"] == "DEMO_MODE")["value"] == "true"
+    assert next(e for e in service["envVars"] if e["key"] == "PUBLIC_DATA_AUTO_SYNC_ON_STARTUP")["value"] == "false"

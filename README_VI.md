@@ -57,7 +57,7 @@ Mở `http://127.0.0.1:8000`. Nếu có mật khẩu ứng dụng, đăng nhập
 4. Kiểm tra `/api/v1/health`, đăng nhập, `/api/v1/providers/status` và `/api/v1/providers/public/sync-status`.
 5. Khi sync có dữ liệu hợp lệ, mở Safari trên iPhone → Chia sẻ → Thêm vào Màn hình chính để dùng dưới dạng PWA.
 
-`render.yaml` là blueprint mẫu, không có nghĩa dịch vụ đã được triển khai tự động. Gói Free/preview có thể ngủ, giới hạn tài nguyên và/hoặc dùng ổ đĩa cache tạm; cần chọn cấu hình lưu trữ lâu dài trước khi vận hành thường xuyên.
+`render.yaml` là Blueprint production dùng web plan Starter và PostgreSQL Basic-256mb có phí; triển khai sẽ tạo tài nguyên tính tiền. `render.preview.yaml` là cấu hình demo Free riêng, không phù hợp vận hành lâu dài: web có thể ngủ và PostgreSQL Free hết hạn sau 30 ngày. Xem `ACCOUNT_CREATION_AND_DEPLOY_VI.md` và `PRODUCTION_COSTS_AND_RELIABILITY_VI.md` trước khi nhấn Deploy Blueprint. Chưa có tài khoản/repository/cloud URL nào được tạo trong gói này.
 
 ## API nội bộ chính
 
