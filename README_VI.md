@@ -78,7 +78,7 @@ PYTHONPATH=backend pytest -q
 python -m compileall -q backend scripts desktop_launcher.py
 ```
 
-Bộ test hiện mô phỏng nguồn bằng fixture và kiểm tra parser, chuẩn hóa, lưu DB SQLite, API, chế độ demo và cấu hình triển khai. Đây **chưa phải** xác nhận endpoint nguồn online hoạt động tại thời điểm chạy, cũng chưa phải kiểm thử PostgreSQL/HTTPS trên máy chủ thật. Trạng thái `network_tested` được giữ `false` cho tới khi chạy kiểm tra trực tiếp có báo cáo.
+Bộ test hiện mô phỏng nguồn bằng fixture và kiểm tra parser, chuẩn hóa, lưu DB SQLite, API, chế độ demo và cấu hình triển khai. Đây **chưa phải** xác nhận endpoint nguồn online hoạt động tại thời điểm chạy, cũng chưa phải kiểm thử PostgreSQL/HTTPS trên máy chủ thật. Trường `network_tested` chỉ thành `true` khi một lượt sync success/partial ghi nhận được ít nhất một lời gọi nguồn upstream; cache hit đơn thuần không được coi là kiểm chứng kết nối mạng.
 
 ## Cấu trúc quan trọng
 

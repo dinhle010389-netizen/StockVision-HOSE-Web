@@ -12,7 +12,7 @@ PRODUCTION POSTGRESQL: not connected. Automated database integration checks use 
 
 LOCAL CHECKS:
 - pytest: 128 passed, 0 failed.
-- Concurrent cross-check: 100/100 worker jobs passed, 3,100 assertions, 0 failed jobs.
+- Concurrent cross-check: 100/100 worker jobs passed, 3,200 assertions, 0 failed jobs.
 - YAML/OpenAPI parse: pass.
 - Python compile: pass.
 - Secret-hygiene scan: pass.

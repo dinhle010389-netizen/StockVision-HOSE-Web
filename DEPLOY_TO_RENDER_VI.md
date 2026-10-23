@@ -15,13 +15,13 @@
 
 ## Cách triển khai không dùng Docker/PowerShell trên máy cá nhân
 
-1. Tải `StockVision_HOSE_Cloud_0.2.zip`, giải nén.
-2. Tạo một repository private mới trong GitHub. Trong trang repo, dùng **Add file → Upload files** để upload nội dung bên trong thư mục dự án (bao gồm `render.yaml`, `Dockerfile`, `requirements.txt`, `backend/`, `scripts/`, `tests/`, `docs/`). Commit.
+1. Tải `StockVision-HOSE-Web-0.5-Repo-Ready.zip`, giải nén; đây là nhánh Web 0.5 dựa trên mã nguồn Windows EXE 0.4.
+2. Tạo một repository private mới trong GitHub. Trong trang repo, dùng **Add file → Upload files** để upload nội dung bên trong thư mục dự án (bao gồm `render.yaml`, `Dockerfile`, `requirements.txt`, `backend/`, `scripts/`, `tests/`, `docs/`, `.github/workflows/ci.yml`). Commit.
 3. Đăng nhập Render → **New + → Blueprint** → chọn repository vừa tạo. Render đọc `render.yaml`, trình bày các dịch vụ `stockvision-hose` và `stockvision-db`; kiểm tra các tài nguyên/chi phí trước khi bấm deploy.
 4. Chờ lần build đầu hoàn tất. Render cấp URL HTTPS dạng `https://<tên-dịch-vụ>.onrender.com`; tự mở `/api/v1/health` và `/api/v1/providers/status` để kiểm tra trạng thái.
 5. Khi Render yêu cầu `APP_ACCESS_PASSWORD`, nhập một mật khẩu dài và riêng chỉ dùng cho StockVision (không gửi vào chat). `APP_SESSION_SECRET` được Render tự sinh. Hãy chọn mật khẩu dài tối thiểu 12 ký tự; backend giới hạn 10 lần đăng nhập sai trong cửa sổ 15 phút cho mỗi IP (best-effort của MVP). Mở web URL; màn hình đăng nhập bảo vệ API phân tích. Giao diện tự gọi API cùng domain sau khi đăng nhập. Dữ liệu phải ghi **DEMO** cho đến khi nạp dữ liệu đã được cấp phép.
 
-Nếu GitHub/Render được kết nối qua ChatGPT, có thể dùng luồng triển khai có hỗ trợ thay vì upload thủ công; mọi bước tạo cloud resource vẫn cần người dùng phê duyệt trong tài khoản.
+Gói repo-ready này chưa tạo GitHub remote hoặc Render resource thay cho bro. Những bước đó cần tài khoản GitHub/Render đã kết nối và người có quyền phải phê duyệt tạo cloud resource.
 
 ## Thiết lập FireAnt — chỉ sau khi được cấp quyền
 

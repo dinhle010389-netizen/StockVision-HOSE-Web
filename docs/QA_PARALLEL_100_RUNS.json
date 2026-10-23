@@ -4,8 +4,8 @@
   "workers_completed": 100,
   "successful_jobs": 100,
   "failed_jobs": 0,
-  "assertions_total": 3100,
-  "elapsed_seconds": 1.934,
+  "assertions_total": 3200,
+  "elapsed_seconds": 2.466,
   "network_requests_made": 0,
   "postgresql_production_tested": false,
   "live_public_sync_confirmed": false,
@@ -13,502 +13,502 @@
   "jobs": [
     {
       "worker": 0,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 1,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 2,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 3,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 4,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 5,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 6,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 7,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 8,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 9,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 10,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 11,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 12,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 13,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 14,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 15,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 16,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 17,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 18,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 19,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 20,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 21,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 22,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 23,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 24,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 25,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 26,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 27,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 28,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 29,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 30,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 31,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 32,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 33,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 34,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 35,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 36,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 37,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 38,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 39,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 40,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 41,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 42,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 43,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 44,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 45,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 46,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 47,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 48,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 49,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 50,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 51,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 52,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 53,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 54,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 55,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 56,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 57,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 58,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 59,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 60,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 61,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 62,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 63,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 64,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 65,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 66,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 67,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 68,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 69,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 70,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 71,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 72,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 73,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 74,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 75,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 76,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 77,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 78,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 79,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 80,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 81,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 82,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 83,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 84,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 85,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 86,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 87,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 88,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 89,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 90,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 91,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 92,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 93,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 94,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 95,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 96,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 97,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 98,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     },
     {
       "worker": 99,
-      "assertions": 31,
+      "assertions": 32,
       "status": "passed"
     }
   ]

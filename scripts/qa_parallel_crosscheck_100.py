@@ -90,6 +90,8 @@ def run_one(worker_id: int) -> dict:
     assert (ROOT / ".env.example").is_file() and not (ROOT / ".env").exists(); checks += 1
     assert "vn-market-data.git@v0.3.0" in (ROOT / "requirements.txt").read_text(encoding="utf-8"); checks += 1
     assert "sync: false" in (ROOT / "render.yaml").read_text(encoding="utf-8"); checks += 1
+    repo_guide = (ROOT / "docs/GIT_PRIVATE_REPO_SETUP_VI.md").read_text(encoding="utf-8")
+    assert "git clone --branch main" in repo_guide; checks += 1
     return {"worker": worker_id, "assertions": checks, "status": "passed"}
 
 def main():
